@@ -11,7 +11,7 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true}));
 app.set('port',process.env.PORT)
 
-app.post('/urlsaving',function(req,res){
+app.post('/',function(req,res){
    
     var minm = 1000; 
     var maxm = 9999; 
@@ -37,7 +37,7 @@ app.post('/urlsaving',function(req,res){
     
    });
 
-app.get("/urlsaving/:id",function(req,res){
+app.get("/:id",function(req,res){
     var name=parseInt(req.params.id);
     mongoClient.connect(url,function(err,client){
         if(err) throw err;
@@ -45,7 +45,7 @@ app.get("/urlsaving/:id",function(req,res){
        db.collection("urls").findOne({shorturl : name},function(err,data){
             if(err) throw err;
             client.close();
-            res.send(data);
+            res.redirect(data.urlName);
         })
 
    })
